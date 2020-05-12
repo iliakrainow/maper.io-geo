@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Maper.io geo</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+    <img id=myImg>
+    <script>
+window.onload = function () {
+var x = document.getElementById("myImg");
+function geoFindMe() {
+
+
+  function success(position) {
+    const latitude  = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    $.post('/', {'lat': latitude, 'lon': longitude}, function(msg){
+        x.src = msg;
+    });
+  }
+
+  function error() {
+    alert('Unable to retrieve your location');
+  }
+
+  if(!navigator.geolocation) {
+    console.log('Geolocation is not supported by your browser');
+  } else {
+    console.log('Locating…');
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+}
+geoFindMe()
+}
+</script>
+</body>
+</html>
