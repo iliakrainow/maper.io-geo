@@ -8,11 +8,17 @@
 <body>
     <img id=myImg>
     <script>
-window.onload = function () {
 var x = document.getElementById("myImg");
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 function geoFindMe() {
-
-
+  console.log('Geo');
   function success(position) {
     const latitude  = position.coords.latitude;
     const longitude = position.coords.longitude;
@@ -20,6 +26,8 @@ function geoFindMe() {
     $.post('/', {'lat': latitude, 'lon': longitude}, function(msg){
         x.src = msg;
     });
+
+
   }
 
   function error() {
@@ -33,9 +41,22 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
+
 }
-geoFindMe()
+
+window.onload = function () {
+
+geoFindMe();
+
 }
+
+
+$(document).ready(function() {
+    setInterval(geoFindMe, 1000);
+
+});
+
+
 </script>
 </body>
 </html>
